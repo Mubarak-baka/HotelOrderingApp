@@ -1,5 +1,5 @@
 // Fetch menu items from the server
-fetch('http://localhost:3000/menuItems') // Send a GET request to the server to retrieve menu items
+fetch('https://hotelorderingapp.onrender.com/menuItems') // Send a GET request to the server to retrieve menu items
   .then((response) => response.json())
   .then((data) => {
     const menu_list = document.getElementById("menu_items");// Get the HTML element with the id"menu_items"
@@ -45,7 +45,7 @@ fetch('http://localhost:3000/menuItems') // Send a GET request to the server to 
   };
 
 //sending the new item to the server  using a POST request 
-fetch('http://localhost:3000/menuItems', {
+fetch('https://hotelorderingapp.onrender.com/menuItems', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
@@ -93,7 +93,7 @@ function showEditForm(id, name, price, imageUrl,description) {
     const updatedDescription=document.getElementById("edit-description").value 
 
     // Send updated data to the server using PUT  request 
-    fetch(`http://localhost:3000/menuItems/${id}`, {
+    fetch(`https://hotelorderingapp.onrender.com/menuItems/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -114,7 +114,7 @@ function showEditForm(id, name, price, imageUrl,description) {
 }
 function deleteMenu(id){
   if(confirm("Are you want to delete this Order")){ // Ask the user for surerity before deletion 
-    fetch(`http://localhost:3000/menuItems/${id}`,{
+    fetch(`https://hotelorderingapp.onrender.com/menuItems/${id}`,{
       method: 'DELETE'
     })
     .then(response =>{
