@@ -92,4 +92,4 @@ Payment Gateway: Integrate a simple payment method for learning purposes.
 Order Sorting: Add functionality to sort orders based on priority or time.
 
 ## licence 
-This project is licensed under the MIT License. See the file for more details.[license]
+This project is licensed under the MIT License. See the file for more details.[https://github.com/Mubarak-baka/HotelOrderingApp/blob/master/License.md]
