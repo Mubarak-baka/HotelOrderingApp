@@ -82,6 +82,11 @@ Fill in the name, price, and description.
 
 Add the custom item to the menu, and it will appear in the order list.
 
+## Live Demo And Source code 
+you can view this App uing the deployed link [https://mubarak-baka.github.io/HotelOrderingApp/] on github 
+& also  [https://hotelorderingapp.onrender.com]
+
+
 ## Future Enhancements
 User Authentication: Add login functionality for hotel staff and guests, with different access levels.
 
