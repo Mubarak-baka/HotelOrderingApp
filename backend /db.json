@@ -1,0 +1,52 @@
+{
+  "menuItems": [
+    {
+      "name": "Citrus Mint Green Tea | Zimbabwe Hearts African Tea",
+      "price": "50",
+      "imageUrl": "https://www.asamiteashop.com/cdn/shop/files/Zimbabwe_720x.png?v=1685481031",
+      "description": "Learn the art of tea tasting and create your own tea blends to take home with you. Our famous blending workshops include unlimited drinks & tea to enjoy at our store. Bring a tea lover as a unique gift experience or come along alone & meet new friends that have book for same date.",
+      "id": "1"
+    },
+    {
+      "name": "AFRICAN TEA BLENDING & TASTING EXPERIENCE - Per person.",
+      "price": "50",
+      "imageUrl": "https://www.asamiteashop.com/cdn/shop/files/Events-products-04_540x.jpg?v=1699591573",
+      "description": "Nicely balanced and flavorful citrus mint tea with a well-hidden green tea base. No grassy or vegetal flavor peeking out anywhere, just lemon and orange flavors teaming up with a gentle mint taste to deliver a refreshing summer cuppa that is pleasant sip after sip.",
+      "id": "2"
+    },
+    {
+      "name": "East African Food and Beverage experience ",
+      "imageUrl": "https://www.asamiteashop.com/cdn/shop/files/Events-04-product-image-01_189fed5e-9b0b-47b3-acda-016fff427ecd_720x.jpg?v=1709298600",
+      "description": "Tea Masala with Maandazi Kick off the event with a tantalizing taste of Tea Masala paired perfectly with freshly made Maandazi at Asami.",
+      "id": "3"
+    },
+    {
+      "id": "4",
+      "name": "West African Food and Beverage Experience",
+      "description": "Tea and Coffee Tasting with African snack and Vegan option (Chin chin)Embark on a journey of flavor with our curated selection of West African pilau, perfectly complemented by traditional snacks",
+      "price": 100,
+      "imageUrl": "https://www.asamiteashop.com/cdn/shop/files/rn-image_picker_lib_temp_905cf74c-b35d-49d8-beb5-3a5eb34c3d58_720x.jpg?v=1711314565"
+    },
+    {
+      "id": "5",
+      "name": "East African Meat Pie",
+      "description": "Enjoy Our Famously Made Meat pie mixed with African Spices",
+      "price": 500,
+      "imageUrl": "https://www.asamiteashop.com/cdn/shop/files/rn-image_picker_lib_temp_53d4f626-9c96-449b-b190-e9e7171ebc92_720x.jpg?v=1711314523"
+    },
+    {
+      "id": "7",
+      "name": "East African Tea Masala ",
+      "description": "Kick off the event with a tantalizing taste of Tea Masala paired perfectly with freshly made Maandazi ",
+      "price": 1000,
+      "imageUrl": "https://www.asamiteashop.com/cdn/shop/files/Events-04-product-image-06_720x.jpg?v=1709298594"
+    },
+    {
+      "id": "8",
+      "name": "African Combo Snacks",
+      "description": "Get an no other experience with our mixed variety of snacks",
+      "price": 4000,
+      "imageUrl": "https://www.asamiteashop.com/cdn/shop/files/event-product-image-01_720x.jpg?v=1711314565"
+    }
+  ]
+}

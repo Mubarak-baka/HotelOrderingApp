@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Ordering App</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="./images/Gemini_Generated_Image_2daaf02daaf02daa.jpeg" alt="Hotel Logo" width="70" height="50" class="d-inline-block align-text-center">
+                Welcome to Nassib's Quisenes Hotel - A Home For All
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <!-- African Specials Section -->
+
+        <!-- Add Menu Item Modal -->
+    <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        Add Menu Item
+    </button>
+
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-menu-item-form">
+                        <div class="mb-3">
+                            <label for="menu-item-name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="menu-item-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="menu-item-price" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="menu-item-price" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="menu-item-description" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="menu-item-description" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="menu-item-image-url" class="form-label">Image URL</label>
+                            <input type="text" class="form-control" id="menu-item-image-url" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Menu Item</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+        <section id="menu-section" class="mb-5">
+            <h3>African Specials</h3>
+            <div id="menu_items" class="row">
+                <!-- Dynamically loaded menu items will appear here -->
+            </div>
+        </section>
+        
+
+        <!-- Custom Items Section -->
+        <section id="custom-items-section" class="mb-5">
+            <h2>Custom Items</h2>
+            <div class="mb-3">
+                <input type="text" id="custom-item-name" placeholder="Enter custom item name" class="form-control mb-2">
+                <input type="number" id="custom-item-price" placeholder="Enter custom item price" class="form-control mb-2">
+                <textarea id="custom-item-description" placeholder="Enter custom item description" class="form-control mb-2"></textarea>
+                <button id="add-custom-item" class="btn btn-primary">Add to Cart</button>
+            </div>
+            <ul id="custom-items-list" class="list-group"></ul>
+        </section>
+
+        <!-- Order Summary Button -->
+        <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Open Order Summary
+        </button>
+    </div>
+
+    <!-- Modals Section -->
+
+    <!-- Order Summary Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Order Summary</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul id="order-list"></ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="submit-button" type="button" class="btn btn-primary">Submit Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+
+    
+
+    <!-- Edit Form Modal -->
+    <div id="editModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Menu Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-form">
+                        <div class="mb-3">
+                            <label for="edit-name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="edit-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-price" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="edit-price" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-image-url" class="form-label">Image URL</label>
+                            <input type="text" class="form-control" id="edit-image-url" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-description" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="edit-description" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section to display single menu item -->
+    <div id="menu-item-display" class="mt-3">
+        <!-- Menu item details will be injected here -->
+    </div>
+
+    
+      
+
+    <!-- Scripts Section -->
+    <script src="./index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+</body>
+</html>
