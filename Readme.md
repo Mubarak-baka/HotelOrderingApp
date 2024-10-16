@@ -30,6 +30,7 @@ Backend: JSON Server (to simulate a REST API)
 ## Setup Instructions
 
 1. Clone the repository. git@github.com:Mubarak-baka/HotelOrderingApp.git
+
 cd hotel-ordering-app
 
 ##  Install JSON Server
