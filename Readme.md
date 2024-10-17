@@ -29,7 +29,8 @@ Backend: JSON Server (to simulate a REST API)
 
 ## Setup Instructions
 
-1. Clone the repository. git clone https://github.com/username/hotel-ordering-app.git
+1. Clone the repository. git@github.com:Mubarak-baka/HotelOrderingApp.git
+
 cd hotel-ordering-app
 
 ##  Install JSON Server
@@ -82,6 +83,11 @@ Fill in the name, price, and description.
 
 Add the custom item to the menu, and it will appear in the order list.
 
+## Live Demo And Source code 
+you can view this App uing the deployed link [https://mubarak-baka.github.io/HotelOrderingApp/] on github 
+& also  [https://hotelorderingapp.onrender.com]
+
+
 ## Future Enhancements
 User Authentication: Add login functionality for hotel staff and guests, with different access levels.
 
@@ -92,4 +98,4 @@ Payment Gateway: Integrate a simple payment method for learning purposes.
 Order Sorting: Add functionality to sort orders based on priority or time.
 
 ## licence 
-This project is licensed under the MIT License. See the file for more details.[license]
+This project is licensed under the MIT License. See the file for more details.[https://github.com/Mubarak-baka/HotelOrderingApp/blob/master/License.md]
