@@ -1,256 +1,227 @@
-// Fetch menu items from the server
-fetch('https://hotelorderingapp.onrender.com/menuItems') // Send a GET request to the server to retrieve menu items
-  .then((response) => response.json())
-  .then((data) => {
-    const menu_list = document.getElementById("menu_items");// Get the HTML element with the id"menu_items"
-    data.forEach(menu => {
-      // Appending the html for each menu item and looping through them 
-      menu_list.innerHTML += `       
-        <div class="col-md-4 mb-4"> 
-          <div class="menu-item-card">
-            <img class="menu-item-image" src="${menu.imageUrl}" alt="${menu.name}">
-            <div class="menu-item-info">
-              <p class="fw-bold">${menu.name}</p>
-              <p>Price: $${menu.price}</p>
-              <p>${menu.description}</p>
-              <div class="d-flex justify-content-between">
-                <button type="button" class="btn btn-success" onclick="addToCart('${menu.name}', ${menu.price}, '${menu.description}')">Add to Cart</button> 
-                <button type="button" class="btn btn-primary" onclick="showEditForm(${menu.id}, '${menu.name}', ${menu.price}, '${menu.imageUrl}', '${menu.description}')">Edit</button>
-              </div>
-              <button type="button" class="btn btn-danger mt-2" onclick="deleteMenu(${menu.id})">Delete</button>
-            </div>
-          </div>
-        </div>
-      `;
-    });
-  })
-  .catch(error => console.error('Error fetching menu items:', error)); // handles any error that occur during the fetch request 
+const apiUrl = 'http://localhost:3000/menuItems'; // API endpoint for menu items
 
-// Adding an eventlistener for the add-menu-item-form
-  document.getElementById('add-menu-item-form').addEventListener('submit',function(event){
-    event.preventDefault();  // prevents the default form submission behaviour
+// Fetch and display menu items
+function fetchMenuItems() {
+    fetch(apiUrl) // Fetch menu items from API
+        .then(response => response.json()) // Parse JSON response
+        .then(menuItems => {
+            const menuContainer = document.getElementById('menu-items'); // Get the menu container
+            menuContainer.innerHTML = ''; // Clear existing items
 
-    //getting values from the form  
-    const name = document.getElementById('menu-item-name').value;
-  const price = document.getElementById('menu-item-price').value;
-  const description = document.getElementById('menu-item-description').value;
-  const imageUrl = document.getElementById('menu-item-image-url').value;
-
-  //creating a new menu item object  here we are creating a new object to hold a new menu item data 
-  const newMenuItem = {
-    name: name,
-    price: price,
-    description: description,
-    imageUrl: imageUrl
-  };
-
-//sending the new item to the server  using a POST request 
-fetch('https://hotelorderingapp.onrender.com/menuItems', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(newMenuItem) // Converting the newMenuItem object to a json string 
-})
-.then(response => {
-  if(response.ok){
-    return response.json();
-  }else{
-    console.error('Error adding menu item',response.statusText); // response . statusText logs an error message if the response was not successful
-  }
-})
-.then(data => {
-  console.log('Menu item added:', data); //log the response data(new menu item added)
-  document.getElementById('add-menu-item-form').reset();// clear the form after submission have been made 
-})
-.catch(error => console.error('Error adding menu item:',error)) // handles errors in the request 
-  })
-
-// this function adss a new item to the cart  including the description of the order the name and the price 
-function addToCart(name, price, description) {
-  orderNow(name, price, description); // here we are calling the function to add the item to the order
+            // Loop through each menu item and create HTML
+            menuItems.forEach(item => {
+                menuContainer.innerHTML += `
+                    <div class="col-md-4"> <!-- Bootstrap column -->
+                        <div class="card menu-item-card"> <!-- Card for each item -->
+                            <img src="${item.imageUrl}" class="card-img-top menu-item-image" alt="${item.name}"> <!-- Item image -->
+                            <div class="card-body"> <!-- Card body -->
+                                <h5 class="card-title">${item.name}</h5> <!-- Item name -->
+                                <p class="card-text"><strong>Price:</strong> $${item.price}</p> <!-- Item price -->
+                                <div class="rating" data-item-id="${item.id}"> <!-- Rating section -->
+                                    <span class="star" onclick="rateItem(${item.id}, 1)">★</span>
+                                    <span class="star" onclick="rateItem(${item.id}, 2)">★</span>
+                                    <span class="star" onclick="rateItem(${item.id}, 3)">★</span>
+                                    <span class="star" onclick="rateItem(${item.id}, 4)">★</span>
+                                    <span class="star" onclick="rateItem(${item.id}, 5)">★</span>
+                                </div>
+                                <!-- Action buttons -->
+                                <button class="btn btn-warning" onclick="editMenuItem(${item.id})">Edit</button>
+                                <button class="btn btn-danger" onclick="deleteMenuItem(${item.id})">Delete</button>
+                                <button class="btn btn-primary" onclick="orderMenuItem(${item.id})">Order</button>
+                                <button class="btn btn-secondary" onclick="viewMenuItem(${item.id})">View</button> 
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        });
 }
 
-// Function to show the edit form  for a menu item the modal
-function showEditForm(id, name, price, imageUrl,description) {
-  document.getElementById("edit-name").value = name;
-  document.getElementById("edit-price").value = price;
-  document.getElementById("edit-image-url").value = imageUrl;
-  document.getElementById("edit-description").value= description
+// Add or edit menu item
+document.getElementById('menuItemForm').addEventListener('submit', function (e) {
+    e.preventDefault(); // Prevent default form submission
 
-  // Show the modal for editing an item
-  const editModal = new bootstrap.Modal(document.getElementById('editModal'));
-  editModal.show();
+    // Collect form data
+    const id = document.getElementById('menuItemId').value;
+    const name = document.getElementById('menuItemName').value;
+    const price = document.getElementById('menuItemPrice').value;
+    const description = document.getElementById('menuItemDescription').value;
+    const imageUrl = document.getElementById('menuItemImageUrl').value;
 
-  // Handle form submission for editing an item 
-  document.getElementById('edit-form').onsubmit = function (event) {
-    event.preventDefault(); // prevent default form behavior 
+    const menuItem = { name, price, description, imageUrl }; // Create menu item object
 
-    // here we are getting Updated values from the  edit form
-    const updatedName = document.getElementById("edit-name").value;
-    const updatedPrice = document.getElementById("edit-price").value;
-    const updatedImageUrl = document.getElementById("edit-image-url").value;
-    const updatedDescription=document.getElementById("edit-description").value 
+    if (id) {
+        // If editing, send a PUT request
+        fetch(`${apiUrl}/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(menuItem) // Send updated item data
+        }).then(() => {
+            fetchMenuItems(); // Refresh menu items
+            clearForm(); // Clear form fields
+        });
+    } else {
+        // If adding, send a POST request
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(menuItem) // Send new item data
+        }).then(() => {
+            fetchMenuItems(); // Refresh menu items
+            clearForm(); // Clear form fields
+        });
+    }
+});
 
-    // Send updated data to the server using PUT  request 
-    fetch(`https://hotelorderingapp.onrender.com/menuItems/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name: updatedName,
-        price: updatedPrice,
-        imageUrl: updatedImageUrl,
-        description:updatedDescription
-      })
-    })
-    .then(response => response.json())
-    .then(updatedItem => {
-      console.log('Item updated:', updatedItem);
-    })
-    .catch(error => console.error('Error updating item:', error));
-  };
-}
-function deleteMenu(id){
-  if(confirm("Are you want to delete this Order")){ // Ask the user for surerity before deletion 
-    fetch(`https://hotelorderingapp.onrender.com/menuItems/${id}`,{
-      method: 'DELETE'
-    })
-    .then(response =>{
-      if(response.ok){
-        console.log("item deleted",id); // displays the item deleted text
-      }else {
-        console.error('Error deleting item:',response.statusText); // log error if deletion fails
-      }
-        
-    })
-    .catch(error => console.error('error deleting item',error)) // handle error in the request
-  }
+// Delete menu item by ID
+function deleteMenuItem(id) {
+    fetch(`${apiUrl}/${id}`, { method: 'DELETE' }) // Send DELETE request
+        .then(() => fetchMenuItems()); // Refresh menu items
 }
 
-// CustomOrders Management 
+// Edit menu item by ID
+function editMenuItem(id) {
+    fetch(`${apiUrl}/${id}`) // Fetch item details
+        .then(response => response.json()) // Parse JSON response
+        .then(menuItem => {
+            // Populate form fields with fetched item data
+            document.getElementById('menuItemId').value = menuItem.id;
+            document.getElementById('menuItemName').value = menuItem.name;
+            document.getElementById('menuItemPrice').value = menuItem.price;
+            document.getElementById('menuItemDescription').value = menuItem.description;
+            document.getElementById('menuItemImageUrl').value = menuItem.imageUrl;
 
-
-let customOrders = []; // initialize an array to store custom orders
-
-//function to remove a custom item from the list 
-function removeCustomItem(element) {
-  const itemElement = element.parentElement;  // Get the parent eleent of the button
-  const itemName = itemElement.querySelector("p strong").innerText; // Extract the name of the item 
-
-  //filter out the item  from customOrders array
-  customOrders = customOrders.filter(order => order.name !== itemName);
-
-  // Remove from the UI
-  itemElement.remove();
+            // Show modal for editing
+            const modal = new bootstrap.Modal(document.getElementById('menuItemModal'));
+            modal.show();
+        });
 }
 
-// Event listener for adding a custom item to the list
-document.getElementById("add-custom-item").addEventListener("click", () => {
-  // We're getting the values from the unput fields 
-  const customItemName = document.getElementById("custom-item-name").value;
-  const customItemPrice = document.getElementById("custom-item-price").value;
-  const customItemDescription = document.getElementById("custom-item-description").value;
+// Clear form fields
+function clearForm() {
+    document.getElementById('menuItemId').value = '';
+    document.getElementById('menuItemName').value = '';
+    document.getElementById('menuItemPrice').value = '';
+    document.getElementById('menuItemDescription').value = '';
+    document.getElementById('menuItemImageUrl').value = '';
+}
 
-  if (customItemName && customItemPrice && customItemDescription) {
-    // Create a new object for  custom item object 
-    const customItem = {
-      name: customItemName,
-      price: customItemPrice,
-      description: customItemDescription
+// Initialize app by fetching menu items
+fetchMenuItems();
+
+// Handle order menu item
+function orderMenuItem(id) {
+    document.getElementById('orderItemId').value = id; // Set hidden field to track the item
+    const modal = new bootstrap.Modal(document.getElementById('orderModal'));
+    modal.show(); // Show order modal
+}
+
+// Handle order form submission
+document.getElementById('orderForm').addEventListener('submit', function (e) {
+    e.preventDefault(); // Prevent default form submission
+
+    // Collect order data
+    const itemId = document.getElementById('orderItemId').value;
+    const customerName = document.getElementById('customerName').value;
+    const quantity = document.getElementById('orderQuantity').value;
+
+    const orderData = {
+        itemId: parseInt(itemId), // Convert ID to integer
+        customerName,
+        quantity: parseInt(quantity), // Convert quantity to integer
+        orderTime: new Date().toISOString() // Record order time
     };
 
-    // Add custom item to the array
-    customOrders.push(customItem);
+    // Post order to server
+    fetch('http://localhost:3000/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderData) // Send order data
+    })
+    .then(() => {
+        alert('Order submitted successfully!'); // Alert success
+        const modal = bootstrap.Modal.getInstance(document.getElementById('orderModal'));
+        modal.hide(); // Hide order modal
+        document.getElementById('orderForm').reset(); // Clear order form
+    })
+    .catch(error => console.error('Error submitting order:', error)); // Log errors
+});
 
-    // Update the UI
-    const customItemHTML = `
-      <li class="list-group-item">
-        <p><strong>${customItemName}</strong></p>
-        <p>Price: ${customItemPrice}</p>
-        <p>Description: ${customItemDescription}</p>
+// View menu item details
+function viewMenuItem(id) {
+    fetch(`http://localhost:3000/menuItems/${id}`) // Fetch item details
+    .then(response => response.json()) // Parse JSON response
+    .then(item => {
+        // Populate modal or section with item details
+        const detailModalContent = `
+            <div class="modal-header">
+                <h5 class="modal-title">${item.name}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="${item.imageUrl}" class="img-fluid" alt="${item.name}">
+                <p>${item.description}</p>
+                <p>Price: $${item.price}</p>
+            </div>`;
         
-        <button class="btn btn-danger btn-sm" onclick="removeCustomItem(this)">Remove</button>
-        <button class="btn btn-outline-success" onclick="orderNow('${customItemName}', ${customItemPrice}, '${customItemDescription}')">Order Now</button>
-      </li>
-    `;
-    document.getElementById("custom-items-list").innerHTML += customItemHTML;
- 
-    // Clear the input fields after adding the item 
-    document.getElementById("custom-item-name").value = '';
-    document.getElementById("custom-item-price").value = '';
-    document.getElementById("custom-item-description").value = '';
-  } else {
-    alert("Dear Customer Please enter all fields!"); // alerts the user if any fields are missing 
-  }
-});
-
-
-// Function to handle "Order Now" button and display in modal
-function orderNow(name, price, description) {
-  const orderList = document.getElementById('order-list'); // getting the list element where orders will be displayed 
-  const orderHTML = `
-    <li id="order-${name}" class="list-group-item">
-      <p><strong>${name}</strong></p>
-      <p>Price: ${price}</p>
-      <p>Description: ${description}</p>
-      <button class="btn btn-danger btn-sm" onclick="removeOrder('${name}')">Delete</button>
-    </li>
-  `;
-  orderList.innerHTML += orderHTML; //adding the order to the list  
-  
-
-  // Trigger the modal to shoow the order 
-  const openModalButton = document.querySelector('[data-bs-target="#exampleModal"]');
-  openModalButton.click(); // simulate a click on the buton that opens the modal
-
+        const detailModal = document.getElementById('detailModal'); // Get detail modal
+        detailModal.querySelector('.modal-content').innerHTML = detailModalContent; // Set content
+        const modalInstance = new bootstrap.Modal(detailModal);
+        modalInstance.show(); // Show detail modal
+    })
+    .catch(error => console.error('Error fetching menu item details:', error)); // Log errors
 }
 
+// Rate menu item
+function rateItem(id, rating) {
+    // Fetch item details to update rating
+    fetch(`http://localhost:3000/menuItems/${id}`)
+    .then(response => response.json())
+    .then(item => {
+        // Initialize ratings array if not present
+        item.ratings = item.ratings || [];
+        item.ratings.push(rating); // Add new rating
 
+        // Calculate average rating
+        const averageRating = item.ratings.reduce((a, b) => a + b, 0) / item.ratings.length;
 
-
-// Function to remove an order from the order summary modal
-function removeOrder(orderName) {
-  // Remove from the customOrders array
-  customOrders = customOrders.filter(order => order.name !== orderName);
-
-  // Remove from the order from the CustomOrders array 
-  const orderElement = document.getElementById(`order-${orderName}`);
-  if (orderElement) {
-    orderElement.remove(); // remove the element from the document 
-  }
-}
-
-// Event listener to display the order summary modal
-document.getElementById("order-summary-button").addEventListener("click", () => {
-  const modalBody = document.querySelector(".modal-body");
-  modalBody.innerHTML = ""; // Clear previous content
-
-  if (customOrders.length === 0) {
-    modalBody.innerHTML = "<p>No custom orders added.</p>";
-  } else {
-    //looping through each order and display it in the modal 
-    customOrders.forEach(order => {
-      modalBody.innerHTML += `
-        <div id="order-summary-${order.name}">
-          <p><strong>${order.name}</strong></p>
-          <p>Price: ${order.price}</p>
-          <p>Description: ${order.description}</p>
-          <button class="btn btn-danger btn-sm" onclick="removeOrder('${order.name}')">Delete</button>
-        </div>
-        <hr>
-      `;
-      
-
-
+        // Update item with new rating
+        fetch(`http://localhost:3000/menuItems/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(item) // Send updated item data
+        })
+        .then(() => {
+            // Update displayed rating
+            const ratingElement = document.querySelector(`[data-item-id="${id}"]`);
+            ratingElement.innerHTML = '';
+            for (let i = 1; i <= Math.round(averageRating); i++) {
+                ratingElement.innerHTML += '★'; // Display stars based on average rating
+            }
+        });
     });
+}
+
+// Submit customer feedback
+function submitFeedback(event) {
+    event.preventDefault(); // Prevent default form submission
     
-  }
-  
-});
+    const feedback = {
+        name: document.getElementById('customerName').value, // Customer name
+        comment: document.getElementById('customerFeedback').value, // Feedback comment
+    };
 
-
-
-  
-
+    // Send feedback to server
+    fetch('http://localhost:3000/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(feedback) // Send feedback data
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Feedback submitted:', data); // Log submitted feedback
+        alert("Thank you for your feedback!"); // Alert success
+        document.getElementById('feedbackForm').reset(); // Reset feedback form
+    })
+    .catch(error => console.error('Error submitting feedback:', error)); // Log errors
+}
