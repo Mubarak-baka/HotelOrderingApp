@@ -1,4 +1,4 @@
-const apiUrl = 'http://localhost:3000/menuItems'; // API endpoint for menu items
+const apiUrl = 'https://hotelorderingapp-1.onrender.com/menuItems'; // API endpoint for menu items
 
 // Fetch and display menu items
 function fetchMenuItems() {
@@ -133,7 +133,7 @@ document.getElementById('orderForm').addEventListener('submit', function (e) {
     };
 
     // Post order to server
-    fetch('http://localhost:3000/orders', {
+    fetch('https://hotelorderingapp-1.onrender.com/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderData) // Send order data
@@ -149,7 +149,7 @@ document.getElementById('orderForm').addEventListener('submit', function (e) {
 
 // View menu item details
 function viewMenuItem(id) {
-    fetch(`http://localhost:3000/menuItems/${id}`) // Fetch item details
+    fetch(`https://hotelorderingapp-1.onrender.com/menuItems/${id}`) // Fetch item details
     .then(response => response.json()) // Parse JSON response
     .then(item => {
         // Populate modal or section with item details
@@ -175,7 +175,7 @@ function viewMenuItem(id) {
 // Rate menu item
 function rateItem(id, rating) {
     // Fetch item details to update rating
-    fetch(`http://localhost:3000/menuItems/${id}`)
+    fetch(`https://hotelorderingapp-1.onrender.com/menuItems/${id}`)
     .then(response => response.json())
     .then(item => {
         // Initialize ratings array if not present
@@ -186,7 +186,7 @@ function rateItem(id, rating) {
         const averageRating = item.ratings.reduce((a, b) => a + b, 0) / item.ratings.length;
 
         // Update item with new rating
-        fetch(`http://localhost:3000/menuItems/${id}`, {
+        fetch(`https://hotelorderingapp-1.onrender.com/menuItems/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(item) // Send updated item data
@@ -212,7 +212,7 @@ function submitFeedback(event) {
     };
 
     // Send feedback to server
-    fetch('http://localhost:3000/feedback', {
+    fetch('https://hotelorderingapp-1.onrender.com/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(feedback) // Send feedback data
