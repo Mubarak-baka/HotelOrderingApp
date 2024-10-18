@@ -85,7 +85,7 @@ Add the custom item to the menu, and it will appear in the order list.
 
 ## Live Demo And Source code 
 you can view this App uing the deployed link [https://mubarak-baka.github.io/HotelOrderingApp/] on github 
-& also  [https://hotelorderingapp.onrender.com]
+& also  [https://hotelorderingapp.onrender.com/menuItems]
 
 
 ## Future Enhancements

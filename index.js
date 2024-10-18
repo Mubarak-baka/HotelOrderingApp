@@ -242,12 +242,15 @@ document.getElementById("order-summary-button").addEventListener("click", () => 
         <hr>
       `;
       
+
+
     });
     
   }
   
-  
 });
+
+
 
   
 
