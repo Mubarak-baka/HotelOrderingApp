@@ -74,19 +74,21 @@ Click the "Delete" button associated with the item.
 
 Confirm deletion to remove it from the menu.
 
-## Adding Custom Items
+## Slide Link 
+https://docs.google.com/presentation/d/1HrKfn_IBLRnA9RLuWHJbtgqn-87hNyyPRrFm1h5Kfoo/edit?usp=sharing
 
-Go to the "Add Custom Item" section.
 
 
-Fill in the name, price, and description.
+## Live Demo
 
-Add the custom item to the menu, and it will appear in the order list.
+https://www.loom.com/share/a4c847087903493f900fb187eedfcc89?sid=b031daad-b4ee-4c0c-912e-1b7ae9c5b831
 
-## Live Demo And Source code 
-you can view this App uing the deployed link [https://mubarak-baka.github.io/HotelOrderingApp/] on github 
-& also  [https://hotelorderingapp-1.onrender.com/menuItems]
+## Live link 
 
+https://mubarak-baka.github.io/HotelOrderingApp/    
+
+https://hotelorderingapp-1.onrender.com/menuItems
+https://hotelorderingapp-1.onrender.com/orders
 
 ## Future Enhancements
 User Authentication: Add login functionality for hotel staff and guests, with different access levels.
