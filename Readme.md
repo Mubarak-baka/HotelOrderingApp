@@ -9,27 +9,22 @@ Each item includes a name, price, description, and image.
 ## Ordering System
 
 Customers can select items from the menu and place orders.
-Orders can be customized by the customer.
+## feed back section 
+customers can submit their feed back 
 
 ## Order Management
 
 Orders are stored and displayed in a summary modal for review.
 Hotel staff can manage orders, including deleting orders.
 
-## Custom Item Ordering
 
-Customers can add custom menu items, which can then be ordered.
-
-## Modal-based Interaction
-
-Bootstrap modals are used for editing items and displaying order summaries.
-Technologies Used
+## Technologies Used
 Frontend: HTML, CSS, JavaScript, Bootstrap
 Backend: JSON Server (to simulate a REST API)  
 
 ## Setup Instructions
 
-1. Clone the repository. git@github.com:Mubarak-baka/HotelOrderingApp.git
+1. Clone the repository.  https://github.com/Mubarak-baka/HotelOrderingApp/tree/master
 
 cd hotel-ordering-app
 
